@@ -1,0 +1,22 @@
+i.fa {
+    font-family: FontAwesome;
+    line-height: inherit;
+}
+
+.fa-stack {
+    z-index: 1;
+    line-height: 2em;
+}
+
+.fa.sort-icon {
+    position: absolute;
+    right: 1em;
+
+    &.fa-caret-down {
+        top: -0.1em;
+    }
+
+    &.fa-caret-up {
+        top: -0.2em;
+    }
+}

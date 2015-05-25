@@ -1,0 +1,160 @@
+extends layout
+
+mixin mdShortcut (KEYNAME)
+    md-tooltip
+        div.text-xxs
+            div.text-bold Shorcut Key
+            div.spacer-xxs
+            div.spacer-1.bg-white
+            div.spacer-xs
+            div.code= KEYNAME
+
+mixin tableHeader (TITLE, PROPERTY)
+    div.width-full(
+        ng-click='tasks.order.set("#{PROPERTY}")'
+        ng-class="{\
+            'bg-gray-md-dark-hover text-white-hover': tasks.order.by != '#{PROPERTY}',\
+            'bg-gray-dark text-white': tasks.order.by == '#{PROPERTY}'\
+        }"
+    )
+        div.spacer-sm
+        div.row.text-xs
+            div.column.small-10
+                span= TITLE
+            i.text-sm.fa.sort-icon(
+                ng-if="tasks.order.by == '#{PROPERTY}'"
+                ng-class="{\
+                    'fa-caret-down': tasks.order.reverse,\
+                    'fa-caret-up': !tasks.order.reverse,\
+                }"
+            )
+        div.spacer-sm
+
+mixin tableFormInput (NAME)
+    div.row.collapse
+        div.column.small-7
+            div.row.spacer-sm
+            div.width-full(
+                ng-if="!task.form.all.#{NAME}.focused && !task.form.all.#{NAME}.hasChanged"
+            )
+                div.spacer-xxs
+                div {{ task.form.all.#{NAME}.input }}
+
+            div.width-full(
+                ng-if="task.form.all.#{NAME}.focused || task.form.all.#{NAME}.hasChanged"
+            )
+                div.spacer-1
+                input.width-full(
+                    type="text"
+                    ng-model="task.form.all.#{NAME}.input"
+                    focus-when="task.form.all.#{NAME}.focused"
+                    ng-change="task.form.all.#{NAME}.onChange()"
+                    ng-focus="task.form.all.#{NAME}.onFocus()"
+                    ng-keydown="task.form.all.#{NAME}.onKeypress($event)"
+                )
+                div.spacer-1(
+                    ng-class="{\
+                        'bg-green': task.form.all.#{NAME}.hasChanged,\
+                        'bg-gray-dark': !task.form.all.#{NAME}.hasChanged,\
+                    }"
+                )
+            div.row.spacer-xs
+        div.column.small-5.text-right
+            div.spacer-xxs
+            div(
+                ng-if="task.form.all.#{NAME}.hasChanged"
+            )
+                div.fa.fa-stack(
+                    ng-click="task.form.all.#{NAME}.save($event)"
+                )
+                    i.fa.fa-stack-2x.fa-circle.text-green
+                    i.fa.fa-stack-1x.fa-check.text-white
+                    +mdShortcut('enter')
+
+                div.fa.fa-stack(
+                    ng-click="task.form.all.#{NAME}.reset($event)"
+                )
+                    i.fa.fa-stack-2x.fa-circle.text-red
+                    i.fa.fa-stack-1x.fa-undo.text-white
+                    +mdShortcut('esc')
+
+            div.fa.fa-stack(
+                ng-if="!task.form.all.#{NAME}.hasChanged"
+                ng-click="task.form.all.#{NAME}.onClick($event)"
+            )
+                i.fa.fa-stack-2x.fa-circle.text-yellow
+                i.fa.fa-stack-1x.fa-pencil.text-white
+                md-tooltip
+                    div.text-xxs
+                        div.text-bold Click to edit
+
+            div.spacer-xxs
+
+block head
+    script.
+        window.tasks = !{ results ? JSON.stringify(results) : JSON.stringify({}) };
+
+block content
+    div.bg-gray-md-light.round-md
+        div.row.collapse.unselectable
+            div.column.small-3
+                +tableHeader('Name', "NAME")
+
+            div.column.small-2
+                +tableHeader('Code', "Code")
+
+            div.column.small-4
+                +tableHeader('Description', "DESC")
+
+            div.column.small-3
+                +tableHeader('Completion', "CD")
+
+    div.spacer-md
+
+    div(
+        ng-repeat="task in tasks.all | orderBy: tasks.order.by : tasks.order.reverse"
+        ng-class="{\
+            'round-md-top': $index == 0,\
+            'round-md-bottom': $index == tasks.all.length - 1,\
+            'bg-gray-xlight bg-gray-md-xlight-hover': $index % 2 == 0 && !task.isSelected,\
+            'bg-gray-light bg-gray-md-xlight-hover': $index % 2 == 1 && !task.isSelected,\
+            'bg-gray-md-light': task.isSelected,\
+        }"
+        ng-click="task.onClick($event)"
+    )
+        div.row.uncollapse
+            div.column.small-3
+                div.row.spacer-md
+                div {{ task.NAME }}
+                div.row.spacer-xs
+
+            div.column.small-2
+                div.row.spacer-md
+                div {{task.CODE}}
+                div.row.spacer-xs
+
+            div.column.small-4
+                +tableFormInput('desc')
+
+            div.column.small-3
+                +tableFormInput('cd')
+
+        div.row.uncollapse(ng-if="task.isSelected == true")
+            div.column.small-12
+                div.spacer-1.bg-gray-dark
+                div.spacer-md
+                div.pad-lr
+                    table
+                        thead
+                            tr
+                                th Id Number
+                                th Category
+
+                        tbody
+                            tr
+                                th {{task.ID}}
+                                th {{task.CATEGORY}}
+                div.spacer-sm
+
+
+    div.spacer-lg

@@ -1,12 +1,8 @@
 {
-  "name": "immigrant-health-care",
+  "name": "foo",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "start": "/usr/local/bin/node server/index.js",
-    "test": "./node_modules/.bin/jasmine-node --coffee --matchall --verbose ./spec"
-  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
@@ -15,18 +11,13 @@
     "gulp-concat": "^2.5.2",
     "gulp-express": "^0.3.5",
     "gulp-jade": "^1.0.1",
-    "gulp-live-server": "0.0.14",
     "gulp-load-plugins": "~0.5.1",
     "gulp-sass": "^2.0.1",
     "gulp-sourcemaps": "^1.5.2",
-    "gulp-uglify": "^1.2.0",
-    "gulp-webserver": "^0.9.0",
-    "jasmine-node": "^1.14.5"
+    "gulp-uglify": "^1.2.0"
   },
   "dependencies": {
     "coffee-script": "^1.9.2",
-    "express": "^4.12.4",
-    "jade": "^1.9.2",
-    "request": "^2.55.0"
+    "jade": "^1.9.2"
   }
 }

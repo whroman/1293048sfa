@@ -120,9 +120,8 @@ block content
             'bg-gray-light bg-gray-md-xlight-hover': $index % 2 == 1 && !task.isSelected,\
             'bg-gray-md-light': task.isSelected,\
         }"
-        ng-click="task.onClick($event)"
     )
-        div.row.uncollapse
+        div.row.uncollapse(ng-click="task.onClick($event)")
             div.column.small-3
                 div.row.spacer-md
                 div {{ task.NAME }}
@@ -143,18 +142,28 @@ block content
             div.column.small-12
                 div.spacer-1.bg-gray-dark
                 div.spacer-md
-                div.pad-lr
-                    table
-                        thead
-                            tr
-                                th Id Number
-                                th Category
+                div.row
+                    div.column.small-6
+                        table.width-full
+                            thead
+                                tr
+                                    th Id Number
+                                    th Category
 
-                        tbody
-                            tr
-                                th {{task.ID}}
-                                th {{task.CATEGORY}}
-                div.spacer-sm
+                            tbody
+                                tr
+                                    th {{task.ID}}
+                                    th {{task.CATEGORY}}
+
+                    div.column.small-6
+                        div.pad.width-full.bg-gray-xlight
+                            canvas#line.chart.chart-line.width-full(
+                                data="task.chart.data"
+                                labels="task.chart.labels"
+                                legend="true"
+                                series="task.chart.series"
+                            )
+                div.spacer-md
 
 
     div.spacer-lg

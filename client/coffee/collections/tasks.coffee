@@ -83,6 +83,23 @@ angular
                 .set 'desc', @DESC
                 .set 'cd', @display.CD
 
+            generateRandomIncreasingInts = (num, start, mult) ->
+                ints = []
+                for i in [1..num] by 1
+                    start += Math.floor(Math.random() * mult)
+                    ints.push(start)
+
+                ints
+
+            @chart = {}
+            @chart.labels = ["January", "February", "March", "April", "May", "June", "July"]
+            @chart.series = ['Outstanding Category Tasks', 'Completed Category Tasks']
+            @chart.data = [
+                generateRandomIncreasingInts(@chart.labels.length, 100, -20),
+                generateRandomIncreasingInts(@chart.labels.length, 10, 30)
+            ]
+
+
     class CollectionTasks
         constructor: () ->
             @all = []

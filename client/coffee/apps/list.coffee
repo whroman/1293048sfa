@@ -3,4 +3,5 @@ angular.module 'App:List', [
     'Util'
     'focusWhen'
     'ngMaterial'
+    'chart.js'
 ]

@@ -44,6 +44,7 @@ mixin tableFormInput (NAME)
                 ng-if="task.form.all.#{NAME}.focused || task.form.all.#{NAME}.hasChanged"
             )
                 div.spacer-1
+                div.spacer-1
                 input.width-full(
                     type="text"
                     ng-model="task.form.all.#{NAME}.input"

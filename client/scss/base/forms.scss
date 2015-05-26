@@ -1,0 +1,19 @@
+form {
+    position: relative;
+}
+
+#body {
+    input[type=text],
+    input[type=email] {
+        outline: none;
+        overflow: hidden;
+        color: inherit;
+        background: transparent;
+        border: none;
+        padding: 0;
+        margin: 0;
+        height: auto;
+        box-shadow: none;
+        font-size: inherit;
+    }
+}
